@@ -1,0 +1,103 @@
+<nav class="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600 backdrop-blur-lg bg-opacity-40 dark:bg-opacity-60 transition-all duration-300">
+  <div class="max-w-screen-xl flex items-center justify-between mx-auto p-4">
+    <!-- LOGO y Venta de Computadoras -->
+    <a href="/" class="flex items-center space-x-3 rtl:space-x-reverse">
+      <img src="https://flowbite.com/docs/images/logo.svg"
+        class="h-10 transition-transform duration-300 ease-in-out transform hover:scale-105" alt="Logo">
+      <span
+        class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white text-gray-800 hover:text-blue-600 transition-colors">TechStore</span>
+    </a>
+
+    <!-- Menú de enlaces (centrado en pantallas grandes) -->
+    <div class="hidden md:flex flex-grow justify-center items-center">
+      <ul class="flex space-x-8 font-medium text-gray-700 dark:text-gray-200">
+        <li>
+          <a href="/" class="block py-2 px-3 rounded-md hover:bg-blue-600 hover:text-white dark:hover:bg-blue-700 dark:hover:text-white transition-colors">Inicio</a>
+        </li>
+        <li>
+          <a href="#about" class="block py-2 px-3 rounded-md hover:bg-blue-600 hover:text-white dark:hover:bg-blue-700 dark:hover:text-white transition-colors">Nosotros</a>
+        </li>
+        <li>
+          <a href="#products" class="block py-2 px-3 rounded-md hover:bg-blue-600 hover:text-white dark:hover:bg-blue-700 dark:hover:text-white transition-colors">Productos</a>
+        </li>
+        <li>
+          <a href="#contact" class="block py-2 px-3 rounded-md hover:bg-blue-600 hover:text-white dark:hover:bg-blue-700 dark:hover:text-white transition-colors">Contacto</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Botón de modo oscuro/claro solo en pantallas grandes -->
+    <div class="hidden md:flex items-center space-x-4">
+      <a href="/login"
+        class="block py-2 px-4 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-700 dark:hover:text-white rounded-md transition-colors">Iniciar sesión</a>
+
+      <button (click)="themeToggle.emit()" aria-label="Cambiar tema"
+        class="text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-800 p-2 rounded-lg transition-all duration-300">
+        <svg *ngIf="isDarkMode" class="w-6 h-6 transition-all duration-300 ease-in-out" fill="none"
+          stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 2v2m0 16v2m10-10h-2M4 12H2m15.071-7.071l-1.414 1.414M6.343 17.657l-1.414 1.414M17.657 17.657l1.414 1.414M6.343 6.343L4.929 4.929M12 6a6 6 0 100 12 6 6 0 000-12z">
+          </path>
+        </svg>
+        <svg *ngIf="!isDarkMode" class="w-6 h-6 transition-all duration-300 ease-in-out" fill="none"
+          stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 1021 12.79z"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Botón de menú hamburguesa para pantallas pequeñas -->
+    <div class="flex md:hidden">
+      <button type="button"
+        class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+        (click)="toggleMenu()" [attr.aria-expanded]="isMenuOpen ? 'true' : 'false'"
+        [attr.aria-controls]="'navbar-sticky'">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M1 1h15M1 7h15M1 13h15" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Menú desplegable que solo se muestra en pantallas pequeñas -->
+  <div [ngClass]="{'hidden': !isMenuOpen, 'block': isMenuOpen}" class="w-full md:hidden" id="navbar-sticky">
+    <ul
+      class="flex flex-col p-4 font-medium border border-gray-100 rounded-lg md:bg-white dark:bg-gray-800 dark:border-gray-700">
+      <li>
+        <a href="/"
+          class="block py-2 px-3 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
+          aria-current="page">Inicio</a>
+      </li>
+      <li>
+        <a href="#about"
+          class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Nosotros</a>
+      </li>
+      <li>
+        <a href="#products"
+          class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Productos</a>
+      </li>
+      <li>
+        <a href="#contact"
+          class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contacto</a>
+      </li>
+      <!-- El botón de cambio de tema se coloca al final del menú hamburguesa -->
+      <li>
+        <button (click)="toggleTheme()" aria-label="Cambiar tema"
+          class="text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-800 p-2 rounded-lg transition-all duration-300 w-full text-left">
+          <svg *ngIf="isDarkMode" class="w-6 h-6 transition-all duration-300 ease-in-out" fill="none"
+            stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 2v2m0 16v2m10-10h-2M4 12H2m15.071-7.071l-1.414 1.414M6.343 17.657l-1.414 1.414M17.657 17.657l1.414 1.414M6.343 6.343L4.929 4.929M12 6a6 6 0 100 12 6 6 0 000-12z">
+            </path>
+          </svg>
+          <svg *ngIf="!isDarkMode" class="w-6 h-6 transition-all duration-300 ease-in-out" fill="none"
+            stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 1021 12.79z"></path>
+          </svg>
+        </button>
+      </li>
+    </ul>
+  </div>
+</nav>

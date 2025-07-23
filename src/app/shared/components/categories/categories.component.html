@@ -1,0 +1,19 @@
+<div class="container mx-auto p-6">
+  <!-- Sección de Categorías -->
+  <h2 class="text-2xl font-semibold text-center text-gray-900 dark:text-white mb-6">Explora nuestras Categorías</h2>
+
+  <!-- Menú horizontal que se adapta al tamaño de pantalla -->
+  <div class="flex flex-wrap justify-center gap-6">
+    <div *ngFor="let category of categories"
+         class="flex flex-col items-center justify-center w-28 h-36 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-md p-4 cursor-pointer hover:scale-105 transform transition-all duration-200 hover:shadow-lg hover:bg-blue-500 hover:text-white"
+         [ngClass]="{'bg-blue-500': category.selected, 'text-white': category.selected}"
+         (click)="toggleSelection(category)">
+
+      <!-- Imagen en círculo sin alterar el tamaño del card -->
+      <div class="w-16 h-16 bg-cover bg-center rounded-full mb-3" [style.backgroundImage]="'url(' + category.icon + ')'" ></div>
+
+      <!-- Nombre de la categoría debajo de la imagen -->
+      <h3 class="text-xs font-medium text-center text-gray-900 dark:text-white">{{ category.name }}</h3>
+    </div>
+  </div>
+</div>
