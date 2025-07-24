@@ -1,86 +1,87 @@
-// src/app/shared/components/nav/navbard-home/navbard-home.component.ts
 import { Component, EventEmitter, Input, Output, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
-// Importar los sub-componentes
-import { NavbarLogoComponent } from '../navbar-logo/navbar-logo.component';
-import { NavbarSearchComponent } from '../navbar-search/navbar-search.component';
-import { NavbarActionsComponent } from '../navbar-actions/navbar-actions.component';
-
-// Interfaces
 interface MenuCategory {
   id: string;
   name: string;
   description: string[];
   icon: string;
-  gradient: string;
+  color: string;
+  image: string;
   link: string;
+  gradient: string;
 }
 
 @Component({
   selector: 'app-navbard-home',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    NavbarLogoComponent,
-    NavbarSearchComponent,
-    NavbarActionsComponent
-  ],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './navbard-home.component.html',
-  styleUrls: ['./navbard-home.component.scss']
+  styleUrls: ['./navbard-home.component.scss'],
 })
 export class NavbardHomeComponent implements OnInit {
   isMenuOpen: boolean = false;
   isMobileDropdownOpen: boolean = false;
+  searchQuery: string = '';
   cartItemsCount: number = 0;
 
   @Input() isDarkMode!: boolean;
   @Output() themeToggle = new EventEmitter<void>();
 
-  // Categorías para el mega menú
+  // Categorías para el mega menú con gradientes profesionales
   categories: MenuCategory[] = [
     {
       id: 'gpu-gaming',
       name: 'GPU Gaming',
       description: ['Alta gama', 'NVIDIA RTX', 'AMD Radeon'],
       icon: 'gaming',
-      gradient: 'from-blue-500 to-blue-600',
-      link: '/productos/gpu-gaming'
+      color: 'blue',
+      image: 'assets/images/gpu-gaming.jpg',
+      link: '/productos/gpu-gaming',
+      gradient: 'from-blue-500 to-blue-600'
     },
     {
       id: 'gpu-profesionales',
       name: 'GPU Profesionales',
       description: ['Edición de video', 'Workstation', 'Renderizado 3D'],
       icon: 'professional',
-      gradient: 'from-green-500 to-green-600',
-      link: '/productos/gpu-profesionales'
+      color: 'green',
+      image: 'assets/images/gpu-professional.jpg',
+      link: '/productos/gpu-profesionales',
+      gradient: 'from-green-500 to-green-600'
     },
     {
       id: 'gpu-compactas',
       name: 'GPU Compactas',
       description: ['Mini PC', 'Bajo consumo', 'SFF builds'],
       icon: 'compact',
-      gradient: 'from-purple-500 to-purple-600',
-      link: '/productos/gpu-compactas'
+      color: 'purple',
+      image: 'assets/images/gpu-compact.jpg',
+      link: '/productos/gpu-compactas',
+      gradient: 'from-purple-500 to-purple-600'
     },
     {
       id: 'gpu-externas',
       name: 'GPU Externas',
       description: ['eGPU para laptops', 'Thunderbolt 3/4', 'Plug & Play'],
       icon: 'external',
-      gradient: 'from-orange-500 to-orange-600',
-      link: '/productos/gpu-externas'
+      color: 'orange',
+      image: 'assets/images/gpu-external.jpg',
+      link: '/productos/gpu-externas',
+      gradient: 'from-orange-500 to-orange-600'
     }
   ];
 
   constructor(private router: Router) {}
 
   ngOnInit(): void {
+    // Cargar datos del carrito si existe
     this.loadCartCount();
   }
 
+  // Cerrar menús al hacer clic fuera
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event): void {
     const target = event.target as HTMLElement;
@@ -89,9 +90,10 @@ export class NavbardHomeComponent implements OnInit {
     }
   }
 
+  // Cerrar menú móvil al redimensionar ventana
   @HostListener('window:resize', ['$event'])
   onResize(): void {
-    if (window.innerWidth >= 1024) {
+    if (window.innerWidth >= 1024) { // lg breakpoint
       this.isMenuOpen = false;
       this.isMobileDropdownOpen = false;
     }
@@ -112,51 +114,56 @@ export class NavbardHomeComponent implements OnInit {
     this.isMobileDropdownOpen = !this.isMobileDropdownOpen;
   }
 
-  onSearch(query: string): void {
-    console.log('Buscando:', query);
-    this.router.navigate(['/buscar'], {
-      queryParams: { q: query }
-    });
-    this.closeMenus();
+  onSearch(): void {
+    if (this.searchQuery.trim()) {
+      console.log('Buscando:', this.searchQuery);
+      // Navegar a página de resultados de búsqueda
+      this.router.navigate(['/buscar'], {
+        queryParams: { q: this.searchQuery.trim() }
+      });
+
+      // Cerrar menú móvil si está abierto
+      this.isMenuOpen = false;
+
+      // Limpiar búsqueda
+      this.searchQuery = '';
+    }
   }
 
   onCategoryClick(category: MenuCategory): void {
     console.log('Navegando a:', category.name);
     this.router.navigate([category.link]);
-    this.closeMenus();
+
+    // Cerrar menú móvil si está abierto
+    this.isMenuOpen = false;
+    this.isMobileDropdownOpen = false;
   }
 
   onUserClick(): void {
     console.log('Abriendo perfil de usuario');
     this.router.navigate(['/perfil']);
-    this.closeMenus();
   }
 
   onCartClick(): void {
     console.log('Abriendo carrito de compras');
     this.router.navigate(['/carrito']);
-    this.closeMenus();
   }
 
-  private closeMenus(): void {
-    this.isMenuOpen = false;
-    this.isMobileDropdownOpen = false;
-  }
-
+  // Método para cargar el conteo del carrito
   private loadCartCount(): void {
-    if (typeof localStorage !== 'undefined') {
-      const savedCartCount = localStorage.getItem('cartCount');
-      this.cartItemsCount = savedCartCount ? parseInt(savedCartCount) : 0;
-    }
+    // Aquí implementarías la lógica para obtener el número de items del carrito
+    // Ejemplo: desde localStorage, servicio, API, etc.
+    const savedCartCount = localStorage.getItem('cartCount');
+    this.cartItemsCount = savedCartCount ? parseInt(savedCartCount) : 0;
   }
 
+  // Método para actualizar el conteo del carrito
   updateCartCount(count: number): void {
     this.cartItemsCount = count;
-    if (typeof localStorage !== 'undefined') {
-      localStorage.setItem('cartCount', count.toString());
-    }
+    localStorage.setItem('cartCount', count.toString());
   }
 
+  // Método auxiliar para obtener el SVG path de cada ícono
   getIconPath(iconType: string): string {
     const iconPaths: { [key: string]: string } = {
       gaming: 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
@@ -168,6 +175,13 @@ export class NavbardHomeComponent implements OnInit {
     return iconPaths[iconType] || iconPaths['gaming'];
   }
 
+  // Método para manejar errores de carga de imágenes
+  onImageError(event: any, category: MenuCategory): void {
+    // Fallback a placeholder
+    event.target.src = `https://via.placeholder.com/400x240/e5e7eb/6b7280?text=${encodeURIComponent(category.name)}`;
+  }
+
+  // Método para track by en ngFor (optimización de rendimiento)
   trackByCategory(index: number, category: MenuCategory): string {
     return category.id;
   }
