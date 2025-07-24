@@ -1,0 +1,86 @@
+// Estilos para el botón DESCUBRIR
+.nav-button-active {
+  background-color: #04246D !important;
+  color: white !important;
+  border-radius: 9999px; // rounded-full
+  font-weight: 600;
+}
+
+.nav-button-normal {
+  color: #374151; // text-gray-700
+  &:hover {
+    color: #2563eb; // hover:text-blue-600
+  }
+}
+
+// Dark mode para el botón
+:host-context(.dark) .nav-button-normal {
+  color: #d1d5db; // dark:text-gray-300
+  &:hover {
+    color: #60a5fa; // dark:hover:text-blue-400
+  }
+}
+
+// Estilos para categorías seleccionadas
+.category-selected {
+  background-color: #dbeafe !important; // bg-blue-50
+  ring: 2px solid #bfdbfe; // ring-2 ring-blue-200
+}
+
+.category-normal {
+  &:hover {
+    background-color: #f9fafb; // hover:bg-gray-50
+  }
+}
+
+// Dark mode para categorías
+:host-context(.dark) .category-selected {
+  background-color: rgba(59, 130, 246, 0.1) !important; // dark:bg-blue-900/20
+  ring: 2px solid #1e40af; // dark:ring-blue-700
+}
+
+:host-context(.dark) .category-normal {
+  &:hover {
+    background-color: #374151; // dark:hover:bg-gray-700
+  }
+}
+
+// Estilos para texto de categorías
+.category-text-selected {
+  color: #04246D !important;
+  font-weight: 600;
+}
+
+.category-text-normal {
+  color: #111827; // text-gray-900
+}
+
+:host-context(.dark) .category-text-normal {
+  color: #f9fafb; // dark:text-white
+}
+
+// Estilos para títulos de subcategorías
+.subcategory-title {
+  color: #04246D !important;
+}
+
+.subcategory-item-title {
+  color: #04246D !important;
+}
+
+:host-context(.dark) .subcategory-title {
+  color: #04246D !important;
+}
+
+:host-context(.dark) .subcategory-item-title {
+  color: #04246D !important;
+}
+
+// Botón "Ver todos los productos"
+.view-all-button {
+  background-color: #04246D !important;
+
+  &:hover {
+    background-color: #032043 !important; // Color más oscuro al hover
+  }
+}

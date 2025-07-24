@@ -1,9 +1,7 @@
-// navbar-menu.component.ts
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { MenuCategory, NavbarMegaMenuComponent } from '../navbar-mega-menu/navbar-mega-menu.component';
-
+import { MenuCategory, SubCategory, NavbarMegaMenuComponent } from '../navbar-mega-menu/navbar-mega-menu.component';
 
 export interface MenuItem {
   label: string;
@@ -15,45 +13,8 @@ export interface MenuItem {
   selector: 'app-navbar-menu',
   standalone: true,
   imports: [CommonModule, RouterModule, NavbarMegaMenuComponent],
-  template: `
-    <div class="hidden lg:flex items-center space-x-8">
-      <!-- Enlaces regulares antes del mega menú -->
-      <a
-        *ngFor="let item of menuItemsBefore"
-        [routerLink]="item.link"
-        [href]="item.isExternal ? item.link : null"
-        class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 text-sm font-medium transition-colors duration-200">
-        {{ item.label }}
-      </a>
-
-      <!-- Mega Menú -->
-      <app-navbar-mega-menu
-        *ngIf="showMegaMenu"
-        [menuTitle]="megaMenuTitle"
-        [categories]="categories"
-        [viewAllText]="viewAllText"
-        (categoryClick)="onCategoryClick($event)"
-        (viewAllClick)="onViewAllClick()">
-      </app-navbar-mega-menu>
-
-      <!-- Enlaces regulares después del mega menú -->
-      <a
-        *ngFor="let item of menuItemsAfter"
-        [routerLink]="item.link"
-        [href]="item.isExternal ? item.link : null"
-        class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 text-sm font-medium transition-colors duration-200">
-        {{ item.label }}
-      </a>
-    </div>
-  `,
-  styles: [`
-    :host {
-      display: flex;
-      flex-grow: 1;
-      justify-content: center;
-      align-items: center;
-    }
-  `]
+  templateUrl: './navbar-menu.component.html',
+  styleUrls: ['./navbar-menu.component.scss']
 })
 export class NavbarMenuComponent {
   @Input() menuItemsBefore: MenuItem[] = [];
@@ -64,10 +25,15 @@ export class NavbarMenuComponent {
   @Input() categories: MenuCategory[] = [];
 
   @Output() categoryClick = new EventEmitter<MenuCategory>();
+  @Output() subCategoryClick = new EventEmitter<SubCategory>();
   @Output() viewAllClick = new EventEmitter<void>();
 
   onCategoryClick(category: MenuCategory): void {
     this.categoryClick.emit(category);
+  }
+
+  onSubCategoryClick(subCategory: SubCategory): void {
+    this.subCategoryClick.emit(subCategory);
   }
 
   onViewAllClick(): void {

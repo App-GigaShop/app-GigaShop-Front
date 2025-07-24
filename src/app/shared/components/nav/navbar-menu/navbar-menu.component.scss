@@ -1,0 +1,18 @@
+// Estilos para el estado activo de navegación
+:host ::ng-deep .active-nav-link {
+  background-color: #04246D !important;
+  color: white !important;
+  font-weight: 600;
+}
+
+// Estilos adicionales para dark mode
+:host ::ng-deep .dark .active-nav-link {
+  background-color: #04246D !important;
+  color: white !important;
+}
+
+// Hover states para enlaces activos
+:host ::ng-deep .active-nav-link:hover {
+  background-color: #032043 !important; /* Color más oscuro al hover */
+  opacity: 0.9;
+}

@@ -6,80 +6,16 @@
       <app-navbar-logo></app-navbar-logo>
 
       <!-- Menú principal - Desktop -->
-      <div class="hidden lg:flex flex-grow justify-center items-center">
-        <ul class="flex space-x-8 font-medium text-gray-700 dark:text-gray-200">
-          <li>
-            <a href="/contactanos" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 text-sm font-medium transition-colors duration-200">
-              CONTÁCTANOS
-            </a>
-          </li>
-
-          <!-- Menú DESCUBRIR con dropdown -->
-          <li class="relative group">
-            <button class="flex items-center text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 text-sm font-medium transition-colors duration-200">
-              DESCUBRIR
-              <svg class="ml-1 w-4 h-4 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-              </svg>
-            </button>
-
-            <!-- Mega Menu -->
-            <div class="absolute left-1/2 transform -translate-x-1/2 top-full mt-3 w-screen max-w-5xl bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out z-50">
-              <div class="p-8">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-
-                  <div
-                    *ngFor="let category of categories; trackBy: trackByCategory"
-                    class="group/item p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200 cursor-pointer"
-                    (click)="onCategoryClick(category)">
-                    <div class="flex flex-col items-center text-center">
-                      <div [ngClass]="'w-16 h-16 bg-gradient-to-br ' + category.gradient + ' rounded-2xl flex items-center justify-center mb-4 group-hover/item:scale-110 transition-transform duration-200'">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" [attr.d]="getIconPath(category.icon)"></path>
-                        </svg>
-                      </div>
-                      <h3 class="font-semibold text-gray-900 dark:text-white text-base mb-2">{{ category.name }}</h3>
-                      <div class="space-y-1 text-sm text-gray-600 dark:text-gray-400">
-                        <p *ngFor="let desc of category.description">{{ desc }}</p>
-                      </div>
-                    </div>
-
-                    <!-- Imagen al hover -->
-                    <div class="mt-4 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300">
-                      <div class="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-600 rounded-lg flex items-center justify-center">
-                        <span class="text-xs text-gray-500 dark:text-gray-400">{{ category.name }}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-
-                <!-- Call to action -->
-                <div class="mt-8 pt-6 border-t border-gray-200 dark:border-gray-600 text-center">
-                  <a href="/productos" class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors duration-200">
-                    Ver todos los productos
-                    <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                    </svg>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </li>
-
-          <li>
-            <a href="/software" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 text-sm font-medium transition-colors duration-200">
-              SOFTWARE
-            </a>
-          </li>
-
-          <li>
-            <a href="/ofertas" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 text-sm font-medium transition-colors duration-200">
-              OFERTAS
-            </a>
-          </li>
-        </ul>
-      </div>
+      <app-navbar-menu
+        [menuItemsBefore]="menuItemsBefore"
+        [menuItemsAfter]="menuItemsAfter"
+        [showMegaMenu]="true"
+        [megaMenuTitle]="'DESCUBRIR'"
+        [categories]="categories"
+        [viewAllText]="'Ver todos los productos'"
+        (categoryClick)="onCategoryClick($event)"
+        (viewAllClick)="onViewAllClick()">
+      </app-navbar-menu>
 
       <!-- Barra de búsqueda y acciones - Desktop -->
       <div class="hidden lg:flex items-center space-x-4">
@@ -100,118 +36,24 @@
       </div>
 
       <!-- Botón menú móvil -->
-      <div class="lg:hidden">
-        <button
-          (click)="toggleMenu()"
-          type="button"
-          class="p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200"
-          [attr.aria-expanded]="isMenuOpen">
-          <span class="sr-only">{{ isMenuOpen ? 'Cerrar menú' : 'Abrir menú' }}</span>
-          <svg [ngClass]="{'hidden': isMenuOpen, 'block': !isMenuOpen}" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-          </svg>
-          <svg [ngClass]="{'hidden': !isMenuOpen, 'block': isMenuOpen}" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Menú móvil -->
-  <div
-    *ngIf="isMenuOpen"
-    class="lg:hidden border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
-    <div class="px-4 py-4 space-y-1">
-
-      <!-- Búsqueda móvil -->
-      <div class="mb-4">
-        <app-navbar-search
-          [placeholder]="'Buscar.....'"
-          [containerClass]="''"
-          [inputClass]="'w-full rounded-lg'"
-          (search)="onSearch($event)">
-        </app-navbar-search>
-      </div>
-
-      <!-- Enlaces de navegación -->
-      <a href="/contactanos"
-         (click)="toggleMenu()"
-         class="block px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200">
-        CONTÁCTANOS
-      </a>
-
-      <!-- DESCUBRIR - Versión móvil -->
-      <div class="space-y-2">
-        <button
-          (click)="toggleMobileDropdown()"
-          class="flex items-center justify-between w-full px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200">
-          DESCUBRIR
-          <svg [ngClass]="{'rotate-180': isMobileDropdownOpen}" class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-          </svg>
-        </button>
-
-        <!-- Submenú móvil -->
-        <div *ngIf="isMobileDropdownOpen" class="ml-4 space-y-1">
-          <a
-            *ngFor="let category of categories; trackBy: trackByCategory"
-            [href]="category.link"
-            (click)="toggleMenu()"
-            class="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200">
-            {{ category.name }}
-          </a>
-        </div>
-      </div>
-
-      <a href="/software"
-         (click)="toggleMenu()"
-         class="block px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200">
-        SOFTWARE
-      </a>
-
-      <a href="/ofertas"
-         (click)="toggleMenu()"
-         class="block px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200">
-        OFERTAS
-      </a>
-
-      <!-- Acciones móviles -->
-      <div class="pt-4 mt-4 border-t border-gray-200 dark:border-gray-600 flex items-center justify-between">
-        <button
-          (click)="toggleTheme()"
-          class="flex items-center px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 rounded-lg transition-colors duration-200">
-          <svg *ngIf="isDarkMode" class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2v2m0 16v2m10-10h-2M4 12H2m15.071-7.071l-1.414 1.414M6.343 17.657l-1.414 1.414M17.657 17.657l1.414 1.414M6.343 6.343L4.929 4.929M12 6a6 6 0 100 12 6 6 0 000-12z"></path>
-          </svg>
-          <svg *ngIf="!isDarkMode" class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 1021 12.79z"></path>
-          </svg>
-          {{ isDarkMode ? 'Modo claro' : 'Modo oscuro' }}
-        </button>
-
-        <div class="flex items-center space-x-2">
-          <button
-            (click)="onUserClick()"
-            class="p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-            </svg>
-          </button>
-          <button
-            (click)="onCartClick()"
-            class="relative p-2 text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m-.4-2L4 3H2m5 10v6a1 1 0 001 1h10a1 1 0 001-1v-6"></path>
-            </svg>
-            <span
-              *ngIf="cartItemsCount > 0"
-              class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center font-medium">
-              {{ cartItemsCount > 99 ? '99+' : cartItemsCount }}
-            </span>
-          </button>
-        </div>
-      </div>
+      <app-navbar-mobile
+        [isMenuOpen]="isMenuOpen"
+        [isMobileDropdownOpen]="isMobileDropdownOpen"
+        [isDarkMode]="isDarkMode"
+        [cartItemsCount]="cartItemsCount"
+        [searchPlaceholder]="'Buscar.....'"
+        [menuItemsBefore]="menuItemsBefore"
+        [menuItemsAfter]="menuItemsAfter"
+        [showMegaMenu]="true"
+        [megaMenuTitle]="'DESCUBRIR'"
+        [categories]="categories"
+        (menuToggle)="toggleMenu()"
+        (mobileDropdownToggle)="toggleMobileDropdown()"
+        (themeToggle)="toggleTheme()"
+        (userClick)="onUserClick()"
+        (cartClick)="onCartClick()"
+        (search)="onSearch($event)">
+      </app-navbar-mobile>
     </div>
   </div>
 </nav>

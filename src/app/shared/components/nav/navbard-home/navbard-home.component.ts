@@ -1,22 +1,24 @@
-// src/app/shared/components/nav/navbard-home/navbard-home.component.ts
-import { Component, EventEmitter, Input, Output, OnInit, HostListener } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  OnInit,
+  HostListener,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 
-// Importar los sub-componentes
+// Importar todos los sub-componentes
 import { NavbarLogoComponent } from '../navbar-logo/navbar-logo.component';
 import { NavbarSearchComponent } from '../navbar-search/navbar-search.component';
 import { NavbarActionsComponent } from '../navbar-actions/navbar-actions.component';
+import { NavbarMenuComponent } from '../navbar-menu/navbar-menu.component';
+import { NavbarMobileComponent } from '../navbar-mobile/navbar-mobile.component';
 
-// Interfaces
-interface MenuCategory {
-  id: string;
-  name: string;
-  description: string[];
-  icon: string;
-  gradient: string;
-  link: string;
-}
+// Importar interfaces desde navbar-mega-menu para consistencia
+import { MenuCategory, SubCategory } from '../navbar-mega-menu/navbar-mega-menu.component';
+import { MenuItem } from '../navbar-menu/navbar-menu.component';
 
 @Component({
   selector: 'app-navbard-home',
@@ -26,10 +28,12 @@ interface MenuCategory {
     RouterModule,
     NavbarLogoComponent,
     NavbarSearchComponent,
-    NavbarActionsComponent
+    NavbarActionsComponent,
+    NavbarMenuComponent,
+    NavbarMobileComponent,
   ],
   templateUrl: './navbard-home.component.html',
-  styleUrls: ['./navbard-home.component.scss']
+  styleUrls: ['./navbard-home.component.scss'],
 })
 export class NavbardHomeComponent implements OnInit {
   isMenuOpen: boolean = false;
@@ -39,39 +43,110 @@ export class NavbardHomeComponent implements OnInit {
   @Input() isDarkMode!: boolean;
   @Output() themeToggle = new EventEmitter<void>();
 
-  // Categorías para el mega menú
+  // Elementos del menú antes del mega menú
+  menuItemsBefore: MenuItem[] = [
+    { label: 'CONTÁCTANOS', link: '/contactanos' },
+  ];
+
+  // Elementos del menú después del mega menú
+  menuItemsAfter: MenuItem[] = [
+    { label: 'SOFTWARE', link: '/software' },
+    { label: 'OFERTAS', link: '/ofertas' },
+  ];
+
+  // Categorías actualizadas para el mega menú (SIN iconSvg)
   categories: MenuCategory[] = [
     {
-      id: 'gpu-gaming',
-      name: 'GPU Gaming',
-      description: ['Alta gama', 'NVIDIA RTX', 'AMD Radeon'],
-      icon: 'gaming',
+      id: 'gaming',
+      name: 'Gaming',
       gradient: 'from-blue-500 to-blue-600',
-      link: '/productos/gpu-gaming'
+      link: '/productos/gaming',
+      subCategories: []
     },
     {
-      id: 'gpu-profesionales',
-      name: 'GPU Profesionales',
-      description: ['Edición de video', 'Workstation', 'Renderizado 3D'],
-      icon: 'professional',
+      id: 'cables',
+      name: 'Cables',
       gradient: 'from-green-500 to-green-600',
-      link: '/productos/gpu-profesionales'
+      link: '/productos/cables',
+      subCategories: [
+        {
+          name: 'Cables USB-C',
+          description: 'USB-C datos, carga rápida, adaptadores USB-C',
+          link: '/productos/cables/usb-c'
+        },
+        {
+          name: 'Cables USB-A',
+          description: 'USB-A convencionales, extensiones USB-A',
+          link: '/productos/cables/usb-a'
+        },
+        {
+          name: 'Cables HDMI',
+          description: 'HDMI alta velocidad, HDMI 4K, mini HDMI',
+          link: '/productos/cables/hdmi'
+        },
+        {
+          name: 'Cables DisplayPort',
+          description: 'DisplayPort 1.2, DisplayPort 1.4, adaptadores DisplayPort',
+          link: '/productos/cables/displayport'
+        },
+        {
+          name: 'Cables Audio',
+          description: 'Audio 3.5mm, Audio ópticos',
+          link: '/productos/cables/audio'
+        },
+        {
+          name: 'Cables Red/Ethernet',
+          description: 'Red/Ethernet Cat5e, Red/Ethernet Cat6, Red/Ethernet Cat7',
+          link: '/productos/cables/ethernet'
+        },
+        {
+          name: 'Cables Lightning',
+          description: 'Lightning convencionales, Extensiones Lightning',
+          link: '/productos/cables/lightning'
+        }
+      ]
     },
     {
-      id: 'gpu-compactas',
-      name: 'GPU Compactas',
-      description: ['Mini PC', 'Bajo consumo', 'SFF builds'],
-      icon: 'compact',
+      id: 'laptops',
+      name: 'Laptops',
       gradient: 'from-purple-500 to-purple-600',
-      link: '/productos/gpu-compactas'
+      link: '/productos/laptops',
+      subCategories: []
     },
     {
-      id: 'gpu-externas',
-      name: 'GPU Externas',
-      description: ['eGPU para laptops', 'Thunderbolt 3/4', 'Plug & Play'],
-      icon: 'external',
-      gradient: 'from-orange-500 to-orange-600',
-      link: '/productos/gpu-externas'
+      id: 'monitores',
+      name: 'Monitores',
+      gradient: 'from-indigo-500 to-indigo-600',
+      link: '/productos/monitores',
+      subCategories: []
+    },
+    {
+      id: 'computadoras',
+      name: 'Computadoras',
+      gradient: 'from-red-500 to-red-600',
+      link: '/productos/computadoras',
+      subCategories: []
+    },
+    {
+      id: 'audio',
+      name: 'Audio',
+      gradient: 'from-yellow-500 to-yellow-600',
+      link: '/productos/audio',
+      subCategories: []
+    },
+    {
+      id: 'impresoras',
+      name: 'Impresoras',
+      gradient: 'from-teal-500 to-teal-600',
+      link: '/productos/impresoras',
+      subCategories: []
+    },
+    {
+      id: 'almacenamiento',
+      name: 'Almacenamiento',
+      gradient: 'from-pink-500 to-pink-600',
+      link: '/productos/almacenamiento',
+      subCategories: []
     }
   ];
 
@@ -115,7 +190,7 @@ export class NavbardHomeComponent implements OnInit {
   onSearch(query: string): void {
     console.log('Buscando:', query);
     this.router.navigate(['/buscar'], {
-      queryParams: { q: query }
+      queryParams: { q: query },
     });
     this.closeMenus();
   }
@@ -123,6 +198,18 @@ export class NavbardHomeComponent implements OnInit {
   onCategoryClick(category: MenuCategory): void {
     console.log('Navegando a:', category.name);
     this.router.navigate([category.link]);
+    this.closeMenus();
+  }
+
+  onSubCategoryClick(subCategory: SubCategory): void {
+    console.log('Navegando a subcategoría:', subCategory.name);
+    this.router.navigate([subCategory.link]);
+    this.closeMenus();
+  }
+
+  onViewAllClick(): void {
+    console.log('Ver todos los productos');
+    this.router.navigate(['/productos']);
     this.closeMenus();
   }
 
@@ -155,20 +242,5 @@ export class NavbardHomeComponent implements OnInit {
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem('cartCount', count.toString());
     }
-  }
-
-  getIconPath(iconType: string): string {
-    const iconPaths: { [key: string]: string } = {
-      gaming: 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
-      professional: 'M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z',
-      compact: 'M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z',
-      external: 'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z'
-    };
-
-    return iconPaths[iconType] || iconPaths['gaming'];
-  }
-
-  trackByCategory(index: number, category: MenuCategory): string {
-    return category.id;
   }
 }
