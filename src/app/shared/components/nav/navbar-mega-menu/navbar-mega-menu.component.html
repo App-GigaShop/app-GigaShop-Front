@@ -4,7 +4,9 @@
       'nav-button-active': selectedCategory !== null,
       'nav-button-normal': selectedCategory === null
     }"
-    class="flex items-center px-3 py-2 text-sm font-medium transition-colors duration-200">
+    class="flex items-center px-3 py-2 text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full"
+    [attr.aria-expanded]="selectedCategory !== null"
+    [attr.aria-haspopup]="true">
     {{ menuTitle }}
     <svg class="ml-1 w-4 h-4 transition-transform duration-200 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
@@ -12,60 +14,67 @@
   </button>
 
   <!-- Mega Menu -->
-  <div class="absolute left-1/2 transform -translate-x-1/2 top-full mt-3 w-screen max-w-6xl bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out z-50">
+  <div class="absolute left-1/2 transform -translate-x-1/2 top-full mt-3 w-screen max-w-6xl bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-out z-50"
+       role="menu"
+       aria-orientation="vertical">
 
     <!-- Primera fila: Iconos de categorías principales -->
-    <div class="p-6 border-b border-gray-200 dark:border-gray-600">
-      <div class="grid grid-cols-4 md:grid-cols-8 gap-4">
+    <div class="p-4 sm:p-6 border-b border-gray-200 dark:border-gray-600">
+      <div class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-3 sm:gap-4">
         <div
           *ngFor="let category of categories; trackBy: trackByCategory"
           [ngClass]="{
             'category-selected': selectedCategory?.id === category.id,
             'category-normal': selectedCategory?.id !== category.id
           }"
-          class="group/item flex flex-col items-center p-3 rounded-lg transition-all duration-200 cursor-pointer"
-          (click)="onCategoryClick(category)">
+          class="group/item flex flex-col items-center p-2 sm:p-3 rounded-lg transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
+          (click)="onCategoryClick(category)"
+          (keydown.enter)="onCategoryClick(category)"
+          (keydown.space)="onCategoryClick(category)"
+          tabindex="0"
+          role="menuitem"
+          [attr.aria-label]="category.name">
 
-          <!-- Ícono -->
-          <div [ngClass]="'w-12 h-12 bg-gradient-to-br ' + category.gradient + ' rounded-xl flex items-center justify-center mb-2 group-hover/item:scale-110 transition-transform duration-200'">
+          <!-- Ícono responsivo -->
+          <div [ngClass]="'w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br ' + category.gradient + ' rounded-xl flex items-center justify-center mb-2 group-hover/item:scale-110 transition-transform duration-200'">
             <div class="text-white">
               <!-- Gaming Icon -->
-              <svg *ngIf="category.id === 'gaming'" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg *ngIf="category.id === 'gaming'" class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-7 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
               </svg>
 
               <!-- Cables Icon -->
-              <svg *ngIf="category.id === 'cables'" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg *ngIf="category.id === 'cables'" class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
               </svg>
 
               <!-- Laptops Icon -->
-              <svg *ngIf="category.id === 'laptops'" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg *ngIf="category.id === 'laptops'" class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
               </svg>
 
               <!-- Monitores Icon -->
-              <svg *ngIf="category.id === 'monitores'" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg *ngIf="category.id === 'monitores'" class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
               </svg>
 
               <!-- Computadoras Icon -->
-              <svg *ngIf="category.id === 'computadoras'" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg *ngIf="category.id === 'computadoras'" class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/>
               </svg>
 
               <!-- Audio Icon -->
-              <svg *ngIf="category.id === 'audio'" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg *ngIf="category.id === 'audio'" class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/>
               </svg>
 
               <!-- Impresoras Icon -->
-              <svg *ngIf="category.id === 'impresoras'" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg *ngIf="category.id === 'impresoras'" class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
               </svg>
 
               <!-- Almacenamiento Icon -->
-              <svg *ngIf="category.id === 'almacenamiento'" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg *ngIf="category.id === 'almacenamiento'" class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/>
               </svg>
             </div>
@@ -77,31 +86,38 @@
               'category-text-selected': selectedCategory?.id === category.id,
               'category-text-normal': selectedCategory?.id !== category.id
             }"
-            class="text-xs text-center transition-colors duration-200">
+            class="text-xs text-center transition-colors duration-200 leading-tight">
             {{ category.name }}
           </span>
         </div>
       </div>
     </div>
 
-    <!-- Segunda fila: Subcategorías -->
-    <div *ngIf="selectedCategory && selectedCategory.subCategories.length > 0" class="p-6">
+    <!-- Segunda fila: Subcategorías con scroll horizontal en móviles -->
+    <div *ngIf="selectedCategory && selectedCategory.subCategories.length > 0" class="p-4 sm:p-6">
       <h3 class="text-lg font-semibold mb-4 subcategory-title">
         {{ selectedCategory.name }}
       </h3>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        <div
-          *ngFor="let subCategory of selectedCategory.subCategories"
-          class="group/sub p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-600"
-          (click)="onSubCategoryClick(subCategory)">
+      <!-- Contenedor con scroll horizontal para móviles -->
+      <div class="overflow-x-auto pb-2">
+        <div class="grid grid-flow-col auto-cols-max gap-4 sm:grid-flow-row sm:auto-cols-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div
+            *ngFor="let subCategory of selectedCategory.subCategories"
+            class="group/sub min-w-64 sm:min-w-0 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200 cursor-pointer border border-transparent hover:border-gray-200 dark:hover:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            (click)="onSubCategoryClick(subCategory)"
+            (keydown.enter)="onSubCategoryClick(subCategory)"
+            (keydown.space)="onSubCategoryClick(subCategory)"
+            tabindex="0"
+            role="menuitem">
 
-          <h4 class="font-medium mb-1 group-hover/sub:font-semibold transition-all duration-200 subcategory-item-title">
-            {{ subCategory.name }}
-          </h4>
-          <p class="text-sm text-gray-600 dark:text-gray-400">
-            {{ subCategory.description }}
-          </p>
+            <h4 class="font-medium mb-1 group-hover/sub:font-semibold transition-all duration-200 subcategory-item-title">
+              {{ subCategory.name }}
+            </h4>
+            <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+              {{ subCategory.description }}
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -110,7 +126,7 @@
     <div class="p-4 bg-gray-50 dark:bg-gray-700 rounded-b-xl text-center">
       <button
         (click)="viewAllClick.emit()"
-        class="view-all-button inline-flex items-center px-6 py-2 text-white rounded-lg font-medium transition-colors duration-200 hover:opacity-90">
+        class="view-all-button inline-flex items-center px-4 sm:px-6 py-2 text-white rounded-lg font-medium transition-all duration-200 hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
         {{ viewAllText }}
         <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>

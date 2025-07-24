@@ -1,13 +1,21 @@
-import { Component } from '@angular/core';
-import { CategoriesComponent } from '../../shared/components/categories/categories.component';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Carousel } from 'flowbite'; // Asegúrate de importar Flowbite
 
 @Component({
   selector: 'app-home',
-  imports: [CategoriesComponent,CommonModule],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
+  ngOnInit(): void {
+    // Asegúrate de que el elemento sea un HTMLElement
+    const carouselElement = document.querySelector('#carouselExampleAutoplaying') as HTMLElement;
+    if (carouselElement) {
+      new Carousel(carouselElement);
+    }
+  }
 }

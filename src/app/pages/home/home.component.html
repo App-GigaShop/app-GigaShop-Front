@@ -1,15 +1,33 @@
+<div class="relative w-full h-screen bg-gradient-to-b from-[#021133] to-[#042163]">
+  <!-- Texto sobre el carrusel -->
+  <div class="absolute inset-0 flex flex-col justify-center items-center text-white z-10">
+    <h1 class="text-4xl font-bold text-center mb-4">Juega, Trabaja y Crea sin Límites</h1>
+    <p class="text-lg text-center">Rendimiento que se adapta a tus sueños, sin romper tu presupuesto</p>
+  </div>
 
-  <section class="text-center py-6 bg-gray-100 dark:bg-gray-800 rounded-lg mb-4">
-    <h1 class="text-2xl font-semibold text-gray-900 dark:text-white mb-2">Bienvenido a TechStore</h1>
-    <p class="text-sm text-gray-700 dark:text-gray-300 mb-3">
-      Encuentra los mejoresd productos electrónicos aquí. ¡Explora nuestras categorías y encuentra lo que necesitas!
-    </p>
-  </section>
-
-
-  <!-- Llamamos al componente de categorías con un contenedor atractivo -->
-  <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <div class="col-span-full">
-      <app-categories></app-categories>
+  <!-- Carrusel -->
+  <div id="carouselExampleAutoplaying" class="relative" data-bs-ride="carousel">
+    <!-- Imágenes del carrusel -->
+    <div class="carousel-inner relative w-full overflow-hidden">
+      <!-- Slide 1 -->
+      <div class="carousel-item active">
+        <img src="assets/imagenes/laptops1.jpg" class="w-full h-screen object-cover" alt="Laptop 1">
+      </div>
+      <!-- Slide 2 -->
+      <div class="carousel-item">
+        <img src="assets/imagenes/laptops2.jpg" class="w-full h-screen object-cover" alt="Laptop 2">
+      </div>
+      <!-- Agrega más imágenes según sea necesario -->
     </div>
-  </section>
+
+    <!-- Controles de navegación -->
+    <button class="carousel-control-prev absolute top-1/2 left-0 transform -translate-y-1/2 text-white px-4 py-2 bg-black bg-opacity-40 rounded-full" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next absolute top-1/2 right-0 transform -translate-y-1/2 text-white px-4 py-2 bg-black bg-opacity-40 rounded-full" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</div>

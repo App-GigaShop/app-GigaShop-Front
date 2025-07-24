@@ -5,3 +5,294 @@
 
 /* input.css */
 @custom-variant dark (&:where(.dark, .dark *));
+
+
+@media (min-width: 475px) {
+  .xs\:inline {
+    display: inline;
+  }
+  .xs\:hidden {
+    display: none;
+  }
+}
+/* Breakpoints personalizados */
+@media (min-width: 475px) {
+  .xs\:inline { display: inline; }
+  .xs\:hidden { display: none; }
+  .xs\:block { display: block; }
+  .xs\:flex { display: flex; }
+}
+
+/* Mejoras para el navbar responsivo */
+.navbar-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Scroll suave para elementos */
+.smooth-scroll {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Estilos para elementos que pueden truncarse */
+.truncate-responsive {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .truncate-responsive {
+    max-width: 120px;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 768px) {
+  .truncate-responsive {
+    max-width: 180px;
+  }
+}
+
+/* Mejoras para touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .touch-friendly {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .hover\:scale-105:hover {
+    transform: none;
+  }
+
+  .group:hover .group-hover\:scale-110 {
+    transform: none;
+  }
+}
+
+/* Estilos para el mega menú responsivo */
+.mega-menu-container {
+  @apply absolute left-1/2 transform -translate-x-1/2 top-full mt-3;
+  width: 100vw;
+  max-width: 72rem; /* 6xl */
+}
+
+@media (max-width: 1280px) {
+  .mega-menu-container {
+    max-width: 64rem; /* 5xl */
+  }
+}
+
+@media (max-width: 1024px) {
+  .mega-menu-container {
+    max-width: 56rem; /* 4xl */
+  }
+}
+
+@media (max-width: 768px) {
+  .mega-menu-container {
+    max-width: 48rem; /* 3xl */
+  }
+}
+
+/* Estilos para el scroll horizontal en subcategorías */
+.subcategories-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e0 transparent;
+}
+
+.subcategories-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.subcategories-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.subcategories-scroll::-webkit-scrollbar-thumb {
+  background: #cbd5e0;
+  border-radius: 3px;
+}
+
+.subcategories-scroll::-webkit-scrollbar-thumb:hover {
+  background: #a0aec0;
+}
+
+/* Dark mode para scrollbar */
+.dark .subcategories-scroll {
+  scrollbar-color: #4a5568 transparent;
+}
+
+.dark .subcategories-scroll::-webkit-scrollbar-thumb {
+  background: #4a5568;
+}
+
+.dark .subcategories-scroll::-webkit-scrollbar-thumb:hover {
+  background: #2d3748;
+}
+
+/* Animaciones mejoradas */
+.slide-up {
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Focus states mejorados para accesibilidad */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+}
+
+.dark .focus-ring {
+  @apply focus:ring-offset-gray-800;
+}
+
+/* Mejoras para botones pequeños en touch devices */
+.btn-touch {
+  @apply min-h-11 min-w-11 flex items-center justify-center;
+}
+
+@media (min-width: 1024px) {
+  .btn-touch {
+    @apply min-h-auto min-w-auto;
+  }
+}
+
+/* Grid responsivo mejorado para categorías */
+.categories-grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+@media (min-width: 640px) {
+  .categories-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .categories-grid {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+}
+
+/* Estilos para prevenir layout shift */
+.navbar-height {
+  height: 3.5rem; /* 14 en Tailwind */
+}
+
+@media (min-width: 640px) {
+  .navbar-height {
+    height: 4rem; /* 16 en Tailwind */
+  }
+}
+
+/* Mejoras para la búsqueda responsiva */
+.search-container {
+  position: relative;
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .search-container {
+    width: 16rem; /* w-64 */
+  }
+}
+
+@media (min-width: 1280px) {
+  .search-container {
+    width: 20rem; /* w-80 */
+  }
+}
+
+/* Overlay mejorado para móvil */
+.mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 40;
+  transition: opacity 0.3s ease-out;
+}
+
+/* Container con scroll mejorado para móvil */
+.mobile-menu-container {
+  position: fixed;
+  top: 3.5rem; /* navbar height en móvil */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: white;
+  z-index: 50;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (min-width: 640px) {
+  .mobile-menu-container {
+    top: 4rem; /* navbar height en tablet */
+  }
+}
+
+.dark .mobile-menu-container {
+  background-color: #111827; /* gray-900 */
+}
+
+/* Mejoras para el espaciado en móvil */
+.mobile-padding {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+@media (min-width: 640px) {
+  .mobile-padding {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+/* Estados de hover mejorados */
+.hover-lift {
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.dark .hover-lift:hover {
+  box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+}
+
+/* Disable hover en touch devices */
+@media (hover: none) {
+  .hover-lift:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}

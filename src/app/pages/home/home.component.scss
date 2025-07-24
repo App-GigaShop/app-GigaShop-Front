@@ -1,0 +1,12 @@
+.carousel-item {
+  height: 100vh; /* Ocupa toda la pantalla */
+  width: 100%;
+}
+
+.carousel-inner {
+  display: flex;
+}
+
+.carousel-control-prev, .carousel-control-next {
+  background-color: rgba(0, 0, 0, 0.6); /* Fondo semi-transparente */
+}
